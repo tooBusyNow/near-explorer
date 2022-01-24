@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Badge, Row, Col } from "react-bootstrap";
+import { Badge, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Trans, useTranslation } from "react-i18next";
 import { useLatestBlockHeight } from "../../hooks/data";
 import Term from "../utils/Term";
@@ -9,6 +9,8 @@ import Timer from "../utils/Timer";
 interface Props {
   producedBlocks?: number;
   expectedBlocks?: number;
+  producedChunks?: number;
+  expectedChunks?: number;
   latestProducedValidatorBlock?: number;
   lastSeen?: number;
   agentName?: string;
@@ -19,6 +21,8 @@ interface Props {
 const ValidatorTelemetryRow: FC<Props> = ({
   producedBlocks,
   expectedBlocks,
+  producedChunks,
+  expectedChunks,
   latestProducedValidatorBlock,
   lastSeen,
   agentName,
@@ -29,6 +33,8 @@ const ValidatorTelemetryRow: FC<Props> = ({
   const isTelemetryAvailable =
     Boolean(producedBlocks) ||
     Boolean(expectedBlocks) ||
+    Boolean(producedChunks) ||
+    Boolean(expectedChunks) ||
     Boolean(latestProducedValidatorBlock) ||
     Boolean(lastSeen) ||
     Boolean(agentName) ||
@@ -58,10 +64,20 @@ const ValidatorTelemetryRow: FC<Props> = ({
               expectedBlocks !== undefined &&
               expectedBlocks !== 0 ? (
                 <>
-                  {((producedBlocks / expectedBlocks) * 100).toFixed(3)}% &nbsp;
-                  <span>
-                    ({producedBlocks}/{expectedBlocks})
-                  </span>
+                  <OverlayTrigger
+                    placement={"bottom"}
+                    overlay={
+                      <Tooltip id="produced-blocks-chunks">
+                        {`produced ${producedBlocks}/${expectedBlocks} blocks,`}{" "}
+                        {producedChunks}/{expectedChunks}&nbsp;chunks
+                      </Tooltip>
+                    }
+                  >
+                    <span>
+                      {((producedBlocks / expectedBlocks) * 100).toFixed(3)}
+                      %
+                    </span>
+                  </OverlayTrigger>
                 </>
               ) : (
                 t("common.state.not_available")

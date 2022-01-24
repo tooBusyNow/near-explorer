@@ -68,8 +68,21 @@ const ValidatorTelemetryRow: FC<Props> = ({
                     placement={"bottom"}
                     overlay={
                       <Tooltip id="produced-blocks-chunks">
-                        {`produced ${producedBlocks}/${expectedBlocks} blocks,`}{" "}
-                        {producedChunks}/{expectedChunks}&nbsp;chunks
+                        {t(
+                          "component.nodes.ValidatorTelemetryRow.produced_blocks",
+                          {
+                            num_produced_blocks: producedBlocks,
+                            num_expected_blocks: expectedBlocks,
+                          }
+                        )}
+                        {", "}
+                        {t(
+                          "component.nodes.ValidatorTelemetryRow.produced_chunks",
+                          {
+                            num_produced_chunks: producedChunks,
+                            num_expected_chunks: expectedChunks,
+                          }
+                        )}
                       </Tooltip>
                     }
                   >

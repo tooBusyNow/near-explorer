@@ -21,7 +21,7 @@ import { AppContextType, AppPropsType } from "next/dist/shared/lib/utils";
 import { Router } from "next/router";
 import { setI18n } from "react-i18next";
 import { YEAR } from "../libraries/time";
-import { globalCss, styled } from "../libraries/stitches.config";
+import { globalCss, styled } from "../libraries/styles";
 
 const globalStyles = globalCss({
   body: {
@@ -50,6 +50,9 @@ const globalStyles = globalCss({
   },
   h2: {
     fontSize: 24,
+  },
+  pre: {
+    whiteSpace: "pre-wrap",
   },
 });
 
@@ -107,10 +110,6 @@ const App: AppType = ({
     <>
       <Head>
         <link rel="shortcut icon" type="image/png" href="/static/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <NetworkContext.Provider value={networkState}>
